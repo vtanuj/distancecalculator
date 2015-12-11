@@ -1,0 +1,175 @@
+
+$blue: #4285F4;
+
+body {
+   font-family: 'Open Sans';
+}
+
+.container {
+   max-width: 400px;
+   margin: 20px auto;
+}
+
+.map {
+   
+   box-shadow: 1px 1px 7px #888;
+   
+   .map__header {
+     background: $blue;
+     padding: 14px 25px;
+     color: #fff;
+      position: relative;
+      
+      .fa {
+         display: inline;
+         margin-right: 30px;
+         font-size: 1.4em;
+         opacity: 0.4;
+      }
+      
+      .fa.active {
+         opacity: 1;
+      }
+      
+      .fa.cancel {
+         font-size: 1.5em;
+         position: absolute;
+         right: 20px;
+         top: 19px;
+         margin-right: 0;
+      }
+      
+      .fa:hover {
+         opacity: 1;
+         cursor: pointer;
+      }
+      
+      span {
+         display: inline;
+         font-size: 1.4em;
+      }
+      
+      .destinations {
+         
+         margin-top: 30px;
+         
+         input {
+            font-size: 15px;
+            font-weight: bold;
+            border-bottom: 1px solid;
+            background: transparent;
+            outline: 0;
+            border: none;
+            color: white;
+            box-shadow: none;
+            padding: 0;
+            -moz-box-shadow: none;
+            -webkit-box-shadow: none;
+            border-radius: 0;
+            margin-bottom: 7px;
+            border-bottom: 1px solid rgba(255,255,255,0.4);
+         }
+         
+          .swap-destinations {
+            padding: 22px 0 0 22px;
+            .fa {
+              font-size: 2.4em;
+            }
+         }
+         
+      }
+      
+   }  
+   
+   .map__options {
+      
+      background: #3367D6;
+      padding: 16px 20px 18px 23px;
+      color: rgba(255,255,255,0.4);
+      
+      .fa {
+         font-size: 1.3em;
+         color: rgba(255,255,255,0.8);
+         display: inline;
+      }
+      
+      .fa:hover {
+         color: #E1E1E1;
+         cursor: pointer;
+      }
+      
+      .fa-caret-down {
+         font-size: 0.9em;
+         margin-left: 8px;
+         color: rgba(255,255,255,0.8);
+      }
+      
+      span {
+         display: inline;
+         margin-left: 16px;
+         font-size: 1em;
+         color: rgba(255,255,255,0.8);
+      }
+      
+      a.pull-right {
+         color: rgba(255,255,255,0.8);
+         text-align: right;
+         text-transform: uppercase;
+         font-size: 0.9em;
+         font-weight: bold;
+      }
+   }
+   
+   .map__directions {
+      
+      color: #222;
+      
+      &-step {
+         
+         border-top: 1px solid #E7E7E7;
+         padding: 20px;
+         
+         .title {
+            display: block;
+            line-height: 2.2em;
+            padding-left: 10px;
+         }
+         
+         .transit-time {
+            display: block;
+            color: #999;
+            font-size: 0.9em;
+            padding-left: 10px;
+         }
+         
+         .fa {
+            font-size: 1.1em;
+            margin-top: 10px;
+         }
+         
+         .estimated-time {
+            display: block;
+            color: #FF9C3A;
+            font-size: 1.1em;
+            font-weight: bold;
+            padding-right: 10px;
+            line-height: 1.9em;
+         }
+         
+         .miles {
+            color: #999;
+            font-size: 0.9em;
+            padding-right: 10px;
+         }
+         
+      }
+      
+      &-step::last-child {
+         border-top: none;
+      }
+      
+   }
+   
+}
+
+

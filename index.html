@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>FOOSASIA TRACKER</title>
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+    <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'>
+    <link rel='stylesheet prefetch' href='http://fonts.googleapis.com/css?family=Open+Sans:400,600'>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery1.11.2.min.js" type="text/javascript"></script>
+    <!-- The Java script below calculates the distance between two geo locations by using the Haversine Function.The Haversine function ignores the ellipsoidal effect thereby assuming Earth to be spherical for the sake of computation.Considering the Earth is  moderately elipsolidial, using the spherical shape of it for geopositioning or the spherical model rougly yields an error of 22km or 0.3% as indicated in this study: http://gis.stackexchange.com/questions/25494/how-accurate-is-approximating-the-earth-as-a-sphere . Thus making it an accurate measure of geopostions -->
+    <script type="text/javascript">
+      //Distance Calculator
+      function calculateDistanceinKms() {
+      var lat1 = document.getElementById("lat_1").value;// Fetches value of Latitude1
+      var lon1 = document.getElementById("long_1").value;// Fetches values of Longitude1
+      var lat2 = document.getElementById("lat_2").value;// Fetches value of Latitude2
+      var lon2 = document.getElementById("long_2").value;// Fetches value of Longitude2
+      var ew1 = document.getElementById("l1d").value;//Fetches value of Longitude1's direction
+      var ew2 = document.getElementById("l2d").value;//Fetches value of Longitude2's direction
+      var ns1 = document.getElementById("lad1").value;//Fetches the direction of Latitude1
+      var ns2 = document.getElementById("lad2").value;//Fetches the direction of Latitude2
+      //Conditionals to distinguish between a 'small distance calculation' or the  calculations within one side of Earth with that of a 'large distance calculation' or calculations involving different sides.
+
+      //Conditional to distinguish between East & West
+      if(ew1!= ew2 ) {var lon1 = -Math.abs(lon1);}
+      //If the direction of longitudes are different this script converts a longitude value into negative so that the appropriate measure between their horizontal distance can be computed
+      if(ns1!= ns2 ){var lat1 = -Math.abs(lat1);}
+      //If the direction of latitudes are different this script converts a latitude value into negative so that the appropriate measure between their vertical distance can be computed
+      var R = 6371; // Mean radius of Earth in kilometers 
+      //Position of Latitude2 is subtracted from Latitude1 & coverted to radians 
+      var dLat = toRad(lat2 -  lat1); 
+      //Position of Longitude 2 is subtracted from Longitude1 & converted to radians
+      var dLon = toRad(lon2 - lon1);
+      var lat1 = toRad(lat1);// Latitude1 is converted to Radians
+      var lat2 = toRad(lat2);// Latitude2 is converted to Radians
+      //This is the Haversine Function
+      //square of half the chord length between the two points
+      var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.sin(dLon / 2) * Math.sin(dLon / 2) *
+      Math.cos(lat1) * Math.cos(lat2);
+      //Angular distance in Radians
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      var d = Math.round(R * c);// Mean radius of Earth multiplied by C
+      // Output
+      document.getElementById("result").innerHTML = "Distance: " + d +"&nbsp;"+ "KMs";} 
+      // Function for Radian conversion 
+      function toRad(Value) {return Value * Math.PI / 180;}
+      //End of Haversine 
+
+      // Difference in timezone calculator 
+      function calculateTime() {
+      var l1 = document.getElementById("long_1").value;//Fetches value of Longitude1
+      var l2= document.getElementById("long_2").value;//Fetches value of Longitude2 
+
+      var d1 = document.getElementById("l1d").value;//Fetches value of Longitude1's direction
+      var d2 = document.getElementById("l2d").value;//Fetches value of Longitude2's direction
+
+      //Calculation for locations on one side of the Prime Meridian 
+      if( d1==d2) { //checks if the direction of the latitudes is same  
+      td = Math.abs(l2-l1);//computes their horizontal difference
+      tm = td * 4 ;// Miltiplies by 4 to recieve the value of difference in sunrise 
+      //As 1 degree equals 4 minute the operation above returns a value in minutes
+      hr = Math.floor(tm / 60);// conversion to hours 
+      mn = Math.round(tm % 60);// conversion to minutes
+      document.getElementById("resultt").innerHTML = hr+"&nbsp;"+"Hours" +"<br>"+mn+"&nbsp;"+"Minutes";}
+      //Calculation for locations on different sides of the Prime Meridian 
+      else if( d1 != d2) {
+      td = Math.round(parseInt(l1)+parseInt(l2));
+      tm = td * 4 ;
+      hr = Math.floor(tm / 60);
+      mn = Math.round(tm % 60);
+      document.getElementById("resultt").innerHTML = hr+"&nbsp;"+"Hours" +"<br>"+mn+"&nbsp;"+"Minutes";}}
+    </script>
+  </head>
+  <body>
+      <div class="container">
+        <div class="map">
+          <div class="map__header">
+            <h3> FOSSASIA TRACKER </h3>
+            <a href ="index.html"> <i class="fa fa-repeat cancel active"></i></a> 
+           <span id="title"> Input coordinates of location 1</span>
+            <div class="destinations">
+              <div class="row">
+                <div class="col-xs-8">
+                  <input type="text" id ="lat_1"class="form-control from" placeholder="Input Latitudes">
+                </div>
+                <div class="col-xs-4">
+                  <select id ="lad1"class="form-control">
+                    <option>N</option>
+                    <option>S</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-8">
+                  <input type="text" id ="long_1"class="form-control to"  placeholder="Input Longitudes">
+                </div>
+                <div class="col-xs-4">
+                  <select id ="l1d"class="form-control">
+                    <option>W</option>
+                    <option>E</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+             <span id="title"> Input coordinates of location 2</span> 
+             <div class="destinations">
+              <div class="row">
+                <div class="col-xs-8">
+                  <input type="text" id ="lat_2" class="form-control from" placeholder="Input Latitudes">
+                </div>
+                <div class="col-xs-4">
+                  <select id ="lad2"class="form-control">
+                    <option>N</option>
+                    <option>S</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-8">
+                  <input id ="long_2" type="text" class="form-control to"  placeholder="Input Longitudes">
+                </div>
+                <div class="col-xs-4">
+                  <select id ="l2d" class="form-control">
+                    <option>W</option>
+                    <option>E</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row" >
+                <div class="col-xs-6 col-xs-offset-3 swap-destinations">
+                  <i class="fa fa-angle-double-right" type="submit" onclick=" calculateTime(); calculateDistanceinKms();" ></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="header2">
+            <span>The distance  &amp; time difference between sunrise </span>
+          </div>
+          <div class="map__directions">
+            <div class="map__directions-step">
+              <div class="row">
+                <div class="col-xs-1">
+                  <i class="fa fa-car"></i>
+                </div>
+                <div class="col-xs-7">
+                  <span class="title">The Distance </span>
+                  <span class="transit-time">Rounded figures</span>
+                </div>
+                <div class="col-xs-4 text-right">
+                  <span class="estimated-time" id="result"></span>
+                </div>
+              </div>
+            </div>
+            <div class="map__directions-step">
+              <div class="row">
+                <div class="col-xs-1">
+                  <i class=" fa fa-clock-o"></i>
+                </div>
+                <div class="col-xs-7">
+                  <span class="title">Sunrise difference </span>
+                  <span class="transit-time">(Using GMT)</span>
+                </div>
+                <div class="col-xs-4 text-right">
+                  <span class="estimated-time" id="resultt"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+    <script src="js/index.js"></script>
+  </body>
+</html>
