@@ -12,6 +12,10 @@
     <script type="text/javascript">
       //Distance Calculator
       function calculateDistanceinKms() {
+	  //reset values
+	  document.getElementById("result").innerHTML = '';
+	  document.getElementById("resultt").innerHTML = '';
+	  
       var lat1 = document.getElementById("lat_1").value;// Fetches value of Latitude1
       var lon1 = document.getElementById("long_1").value;// Fetches values of Longitude1
       var lat2 = document.getElementById("lat_2").value;// Fetches value of Latitude2
